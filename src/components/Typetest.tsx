@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { doc, getDoc } from "firebase/firestore";
-import { db } from '../firebase';
 import { useTimer } from 'react-timer-hook';
 import { Wrapper, Input, Words, Info, InfoItem } from './Typetest.styled';
+import { fetchWordlist } from '../services/firestore.service';
 
 const calculateWpm = (allEntries: number, timeSeconds: number) => {
     return Math.floor((allEntries/5) / (timeSeconds/60))
@@ -34,20 +33,12 @@ const Typetest = () => {
         }
     }
 
-    const fetchWordlist = async () => {
-        const ref = doc(db, "wordlist", "test");
-        const snapshot = await getDoc(ref);
-        const rand = Math.floor(Math.random() * 3950);
-
-        if(snapshot.exists()){
-            setWordlist(snapshot.data().words.slice(rand, rand+50))
-        } else {
-            console.log("Failed to fetch wordlist")
-        }
+    const getWordlist = async () => {
+        setWordlist(await fetchWordlist("test", 30));
     }
 
     useEffect(() => {
-        fetchWordlist()
+        getWordlist();
     },[])
 
     useEffect(() => {
