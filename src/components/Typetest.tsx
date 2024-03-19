@@ -1,45 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebase';
 import { useTimer } from 'react-timer-hook';
-
-const Wrapper = styled.section`
-    font-size: 1.2em;
-    text-align: left;
-    padding: 10px 10px;
-    border-radius: 4px;
-    border: 1px solid black;
-    color: antiquewhite;
-    background-color: #282c34;
-`
-
-const Words = styled.div`
-    background-color: #373d48;
-    border-radius: 4px;
-    padding: 0.5em;
-    margin-bottom: 10px;
-    color: white;
-    text-align: justify;
-`
-
-const Input = styled.input`
-    color: antiquewhite;
-    border: 1px solid black;
-    border-radius: 4px;
-    background-color: #373d48;
-    padding: 0.5em;
-    outline: none;
-`
-
-const Info = styled.div`
-    display: flex;
-    justify-content: space-between;
-`
-
-const InfoItem = styled.span`
-    margin-bottom: 10px;
-`
+import { Wrapper, Input, Words, Info, InfoItem } from './Typetest.styled';
 
 const calculateWpm = (allEntries: number, timeSeconds: number) => {
     return Math.floor((allEntries/5) / (timeSeconds/60))
@@ -88,7 +51,6 @@ const Typetest = () => {
     },[])
 
     useEffect(() => {
-        console.log(entriesCounter, timeLimitSeconds-timer.seconds)
         if(timer.isRunning){
             setWpm(calculateWpm(entriesCounter, (timeLimitSeconds-timer.seconds)))
         }
