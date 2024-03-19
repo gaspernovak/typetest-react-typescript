@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../firebase';
 
 const Wrapper = styled.section`
     font-size: 1.5em;
@@ -29,27 +31,38 @@ const Input = styled.input`
 `
 
 const Typetest = () => {
-    const [wordlist, setWordlist] = useState<String[]>(["marie", "john", "doe", "lorem", "ipsum"])
-    const [input, setInput] = useState("")
+    const [wordlist, setWordlist] = useState<String[]>([])
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInput(e.currentTarget.value)
-
         if(e.currentTarget.value === wordlist[0]+' '){
             setWordlist(wordlist.slice(1))
             e.currentTarget.value = ''
         }
-
     }
-    console.log(input)
+
+    const fetchWordlist = async () => {
+        const ref = doc(db, "wordlist", "test");
+        const snapshot = await getDoc(ref);
+        const rand = Math.floor(Math.random() * 3950);
+
+        if(snapshot.exists()){
+            setWordlist(snapshot.data().words.slice(rand, rand+50))
+        } else {
+            console.log("Failed to fetch wordlist")
+        }
+    }
+
+    useEffect(() => {
+        fetchWordlist()
+    },[])
 
     return (
     <div>
         <Wrapper>
             <Words>
                 { wordlist &&
-                    wordlist.map((word) => {
-                        return <span> {word} </span>
+                    wordlist.map((word, key) => {
+                        return <span key={key}> {word} </span>
                     })
                 }
             </Words>
