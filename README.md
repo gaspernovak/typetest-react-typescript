@@ -1,1 +1,1 @@
-Typetest app rewrite in typescript adding tailwind and replacing pocketbase with firebase
+Typetest app rewrite in typescript using styled components and firebase
