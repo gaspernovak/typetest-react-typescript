@@ -7,7 +7,6 @@ function App() {
   return (
     <>
       <Typetest/>
-      <Button $primary>test</Button>
     </>
   )
 }
