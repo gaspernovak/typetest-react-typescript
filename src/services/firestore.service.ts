@@ -1,6 +1,12 @@
 
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from '../firebase';
+
+export interface Score {
+    username: string;
+    date: Date;
+    wpm: number;
+}
 
 export const fetchWordlist = async (wordDoc: string, wordCount: number) => {
     const ref = doc(db, "wordlist", wordDoc);
@@ -13,4 +19,10 @@ export const fetchWordlist = async (wordDoc: string, wordCount: number) => {
     } else {
         console.log("Failed to fetch wordlist")
     }
+}
+
+export const publishScore = async (score: Score) => {
+    await setDoc(doc(db, "scores"), {
+        score
+    })
 }

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 export const Wrapper = styled.section`
     font-size: 1.2em;
@@ -25,6 +25,7 @@ export const Input = styled.input`
     border-radius: 4px;
     background-color: #373d48;
     padding: 0.5em;
+    margin-right: 0.5em;
     outline: none;
 `
 
@@ -35,4 +36,24 @@ export const Info = styled.div`
 
 export const InfoItem = styled.span`
     margin-bottom: 10px;
+`
+
+export const Button = styled.button<{ $red?: boolean }>`
+    color: antiquewhite;
+    border: 0px;
+    border-radius: 4px;
+    background-color: #282c34;
+    padding: 0.5em;
+    margin: 0.5em;
+    margin-right: 0.5em;
+    outline: none;
+    &:hover {
+        background-color: #373d48;
+    }
+
+    ${props => 
+        props.$red &&
+        css`
+            color: lightcoral;
+        `};
 `
