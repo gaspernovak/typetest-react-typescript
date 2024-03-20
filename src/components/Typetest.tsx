@@ -25,7 +25,10 @@ const Typetest = () => {
     });
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        timer.start()
+        if(!timer.isRunning){
+            timer.start()
+        }
+
         if(e.currentTarget.value === wordlist[0]+' '){
             setWordlist(wordlist.slice(1))
             e.currentTarget.value = ''
